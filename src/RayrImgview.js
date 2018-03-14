@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 
+import RayrView from './view';
+
 class RayrImgview extends React.Component {
 
     static propTypes = {};
@@ -9,8 +11,17 @@ class RayrImgview extends React.Component {
     static defaultProps = {};
 
     render() {
+
+        const {className, src} = this.props;
+
         return (
-            <div className="rayr-imgview">rayr-imgview</div>
+            <img {...this.props} className={`rayr-imgview ${className}`} onClick={() => {
+                RayrView(src).then(() => {
+
+                }, () => {
+
+                })
+            }}/>
         );
     }
 }

@@ -1,4 +1,5 @@
 import 'react-rayr-imgview/src/RayrImgview.scss';
+import './app.scss';
 
 import 'babel-polyfill';
 import React from 'react';
@@ -9,7 +10,7 @@ function App() {
     return (
         <div>
             <h1>组件初始化</h1>
-            <RayrImgview/>
+            <RayrImgview className="imgview-demo" alt='测试' src="http://pic1.win4000.com/wallpaper/2/50616eda66fd3.jpg"/>
         </div>
     )
 }

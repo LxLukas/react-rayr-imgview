@@ -1,2 +1,22 @@
 .rayr-imgview {
+    cursor: pointer;
+}
+
+.rayr-imgview-box {
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    display: flex;
+    background-color: rgba(0, 0, 0, .5);
+    align-items: center;
+    justify-content: center;
+    .imgview-box {
+        max-width: 50%;
+        img {
+            width: 100%;
+            cursor: pointer;
+        }
+    }
 }
