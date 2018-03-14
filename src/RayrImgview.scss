@@ -19,4 +19,10 @@
             cursor: pointer;
         }
     }
+    .imgview-box-tools {
+        position: absolute;
+        left: 50%;
+        transform: translate(-50%, 0);
+        bottom: 100px;
+    }
 }

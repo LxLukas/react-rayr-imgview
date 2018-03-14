@@ -16,9 +16,35 @@ export default function (src) {
         class Modal extends Component {
             constructor() {
                 super();
+                this.state = {
+                    iNow: 1
+                }
             }
 
             componentDidMount() {
+
+                const {imgviewBox} = this.refs;
+                const t = this;
+
+                imgviewBox.addEventListener('mousewheel', (e) => {
+                    const {iNow} = t.state;
+
+                    if (e.deltaY > 0) {
+                        if (iNow > 2) {
+                            return;
+                        }
+                        t.setState({
+                            iNow: iNow + 0.04
+                        });
+                    } else {
+                        if (iNow < 0.1) {
+                            return;
+                        }
+                        t.setState({
+                            iNow: iNow - 0.04
+                        });
+                    }
+                }, false);
             }
 
             close() {
@@ -37,11 +63,15 @@ export default function (src) {
             }
 
             render() {
+
+                const {iNow} = this.state;
+
                 return (
-                    <div className="rayr-imgview-box">
-                        <div className="imgview-box">
-                            <img src={src}/>
+                    <div className="rayr-imgview-box" ref="imgviewBox">
+                        <div className="imgview-box" style={{transform: `scale(${iNow})`}}><img
+                            src={src}/>
                         </div>
+                        <div className="imgview-box-tools">1111</div>
                     </div>
                 )
             }
