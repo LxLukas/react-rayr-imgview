@@ -17,7 +17,8 @@ export default function (src) {
             constructor() {
                 super();
                 this.state = {
-                    iNow: 1
+                    iNow: 1,
+                    rotate: 0
                 }
             }
 
@@ -34,14 +35,14 @@ export default function (src) {
                             return;
                         }
                         t.setState({
-                            iNow: iNow + 0.04
+                            iNow: iNow + 0.1
                         });
                     } else {
                         if (iNow < 0.1) {
                             return;
                         }
                         t.setState({
-                            iNow: iNow - 0.04
+                            iNow: iNow - 0.1
                         });
                     }
                 }, false);
@@ -62,16 +63,50 @@ export default function (src) {
                 resolve(res);
             }
 
+            tLeft() {
+                const t = this;
+                t.setState({
+                    rotate: t.state.rotate - 90
+                });
+            }
+
+            tRight() {
+                const t = this;
+                t.setState({
+                    rotate: t.state.rotate + 90
+                });
+            }
+
+            reSet() {
+                this.setState({
+                    iNow: 1,
+                    rotate: 0
+                });
+            }
+
             render() {
 
-                const {iNow} = this.state;
+                const {iNow, rotate} = this.state;
+                const t = this;
 
                 return (
                     <div className="rayr-imgview-box" ref="imgviewBox">
-                        <div className="imgview-box" style={{transform: `scale(${iNow})`}}><img
+                        <div className="imgview-box" style={{transform: `scale(${iNow}) rotate(${rotate}deg)`}}><img
                             src={src}/>
                         </div>
-                        <div className="imgview-box-tools">1111</div>
+                        <div className="imgview-box-tools">
+                            <span className="plus"></span>
+                            <span className="minus"></span>
+                            <span className="left" onClick={() => {
+                                t.tLeft();
+                            }}></span>
+                            <span className="right" onClick={() => {
+                                t.tRight();
+                            }}></span>
+                            <span className="refresh" onClick={() => {
+                                t.reSet();
+                            }}></span>
+                        </div>
                     </div>
                 )
             }
