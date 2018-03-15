@@ -12,11 +12,11 @@ class RayrImgview extends React.Component {
 
     render() {
 
-        const {className, src} = this.props;
+        const {className, src, nsrc} = this.props;
 
         return (
             <img {...this.props} className={`rayr-imgview ${className}`} onClick={() => {
-                RayrView(src).then(() => {
+                RayrView(nsrc || src).then(() => {
 
                 }, () => {
 

@@ -18,13 +18,15 @@ export default function (src) {
                 super();
                 this.state = {
                     iNow: 1,
-                    rotate: 0
+                    rotate: 0,
+                    posX: 0,
+                    posY: 0
                 }
             }
 
             componentDidMount() {
 
-                const {imgviewBox} = this.refs;
+                const {imgviewBox, imgviewImg} = this.refs;
                 const t = this;
 
                 imgviewBox.addEventListener('mousewheel', (e) => {
@@ -86,12 +88,14 @@ export default function (src) {
 
             render() {
 
-                const {iNow, rotate} = this.state;
+                const {iNow, rotate, posX, posY} = this.state;
                 const t = this;
+
+                let style = {transform: `scale(${iNow}) rotate(${rotate}deg) translate(${posX}px, ${posY}px)`}
 
                 return (
                     <div className="rayr-imgview-box" ref="imgviewBox">
-                        <div className="imgview-box" style={{transform: `scale(${iNow}) rotate(${rotate}deg)`}}><img
+                        <div className="imgview-box" ref="imgviewImg" style={style}><img
                             src={src}/>
                         </div>
                         <div className="imgview-box-tools">
