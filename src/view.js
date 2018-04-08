@@ -92,7 +92,7 @@ export default function (src) {
 
             minusFn() {
                 const {iNow} = this.state;
-                
+
                 if (iNow < 0.1) {
                     return;
                 }
