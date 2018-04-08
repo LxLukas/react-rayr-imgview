@@ -79,6 +79,28 @@ export default function (src) {
                 });
             }
 
+            plusFn() {
+                const {iNow} = this.state;
+
+                if (iNow > 2) {
+                    return;
+                }
+                this.setState({
+                    iNow: iNow + 0.1
+                });
+            }
+
+            minusFn() {
+                const {iNow} = this.state;
+                
+                if (iNow < 0.1) {
+                    return;
+                }
+                this.setState({
+                    iNow: iNow - 0.1
+                });
+            }
+
             reSet() {
                 this.setState({
                     iNow: 1,
@@ -99,18 +121,25 @@ export default function (src) {
                             src={src}/>
                         </div>
                         <div className="imgview-box-tools">
-                            <span className="plus"></span>
-                            <span className="minus"></span>
-                            <span className="left" onClick={() => {
+                            <span className="imgview-icon plus" onClick={() => {
+                                this.plusFn();
+                            }}></span>
+                            <span className="imgview-icon minus" onClick={() => {
+                                this.minusFn();
+                            }}></span>
+                            <span className="imgview-icon left" onClick={() => {
                                 t.tLeft();
                             }}></span>
-                            <span className="right" onClick={() => {
+                            <span className="imgview-icon right" onClick={() => {
                                 t.tRight();
                             }}></span>
-                            <span className="refresh" onClick={() => {
+                            <span className="imgview-icon refresh" onClick={() => {
                                 t.reSet();
                             }}></span>
                         </div>
+                        <div className="imgview-icon imgview-box-close" onClick={() => {
+                            this.cancel();
+                        }}></div>
                     </div>
                 )
             }

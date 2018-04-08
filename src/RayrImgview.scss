@@ -9,9 +9,23 @@
     bottom: 0;
     right: 0;
     display: flex;
-    background-color: rgba(0, 0, 0, .3);
+    background-color: rgba(0, 0, 0, .5);
     align-items: center;
     justify-content: center;
+    .imgview-icon {
+        background-size: 384px 92.5px;
+        background-repeat: no-repeat;
+        background-image: url("./icon.png");
+    }
+    .imgview-box-close {
+        position: absolute;
+        right: 20px;
+        top: 20px;
+        width: 32px;
+        height: 32px;
+        background-position: -352px 0;
+        cursor: pointer;
+    }
     .imgview-box {
         max-width: 50%;
         transition: all .3s;
@@ -27,30 +41,28 @@
         transform: translate(-50%, 0);
         bottom: 200px;
         span {
-            width: 25px;
-            height: 25px;
-            margin-right: 10px;
-            background-size: cover;
-            background-repeat: no-repeat;
+            width: 32px;
+            height: 32px;
+            margin-right: 15px;
             &:last-child {
                 margin-right: 0;
             }
             cursor: pointer;
         }
         span.plus {
-            background-image: url("./images/plus.png");
+            background-position:  0 0;
         }
         span.minus {
-            background-image: url("./images/minus.png");
+            background-position:  -32px 0;
         }
         span.left {
-            background-image: url("./images/left.png");
+            background-position:  -224px 0;
         }
         span.right {
-            background-image: url("./images/right.png");
+            background-position:  -256px 0;
         }
         span.refresh {
-            background-image: url("./images/refresh.png");
+            background-position:  -64px 0;
         }
     }
 }
