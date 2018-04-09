@@ -133,6 +133,12 @@ export default function (src) {
                             <span className="imgview-icon right" onClick={() => {
                                 t.tRight();
                             }}></span>
+                            <span className="imgview-icon horizontal" onClick={() => {
+                                t.tLeft();
+                            }}></span>
+                            <span className="imgview-icon vertical" onClick={() => {
+                                t.tRight();
+                            }}></span>
                             <span className="imgview-icon refresh" onClick={() => {
                                 t.reSet();
                             }}></span>
