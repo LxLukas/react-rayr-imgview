@@ -31,7 +31,8 @@ export default function (src) {
                     originImgViewPos: {
                         x: 0,
                         y: 0
-                    }
+                    },
+                    rotateStatus: 0// 0,1,2,3 四个值，分别代表旋转的四个朝向
                 }
             }
 
@@ -59,6 +60,8 @@ export default function (src) {
                         });
                     }
                 }, false);
+
+                this.ImageToCanvas();
             }
 
             close() {
@@ -78,15 +81,23 @@ export default function (src) {
 
             tLeft() {
                 const t = this;
+
+                let deg = t.state.rotate - 90;
+                let rotStatus = Math.abs((deg/90 + 4)%4);
                 t.setState({
-                    rotate: t.state.rotate - 90
+                    rotate: t.state.rotate - 90,
+                    rotateStatus: rotStatus
                 });
             }
 
             tRight() {
                 const t = this;
+
+                let deg = t.state.rotate + 90;
+                let rotStatus = Math.abs((deg/90)%4);
                 t.setState({
-                    rotate: t.state.rotate + 90
+                    rotate: t.state.rotate + 90,
+                    rotateStatus: rotStatus
                 });
             }
 
@@ -129,7 +140,11 @@ export default function (src) {
             reSet() {
                 this.setState({
                     iNow: 1,
-                    rotate: 0
+                    rotate: 0,
+                    posX: 0,
+                    posY: 0,
+                    rotateY: 0,
+                    rotateX: 0
                 });
             }
 
@@ -141,14 +156,14 @@ export default function (src) {
 
                 let image = new Image();
                 image.src = imgBox.src;
-                canvas.getContext("2d").drawImage(image, 0, 0, imgBox.width, imgBox.height);//0, 0参数画布上的坐标点，图片将会拷贝到这个地方  
+                canvas.getContext("2d").drawImage(image, 0, 0, imgBox.width, imgBox.height);//0, 0参数画布上的坐标点，图片将会拷贝到这个地方
             }
 
             DragStart(e) {
-                this.ImageToCanvas();
                 let dom = this.refs.imgviewImg;
                 let oldTransform = dom.style.transform;
-                let oldTfInfo = oldTransform.match(/\((.+)\)/)[0];// 匹配括号里的字符串
+                let oldTfInfo = oldTransform.slice(oldTransform.indexOf('translate'), oldTransform.indexOf('rotateY')-1);// 这里字符串匹配要做优化
+                oldTfInfo = oldTfInfo.match(/\((.+)\)/)[0];// 匹配括号里的字符串
                 oldTfInfo = oldTfInfo.replace(/(\(|\)|\s)/g, '');
                 let oldTfInfoList = oldTfInfo.split(',');
                 let originX = parseInt(oldTfInfoList[0].replace('px', ''));
@@ -183,11 +198,14 @@ export default function (src) {
                 // 移动前的图片预览框位置
                 let originX = this.state.originImgViewPos.x;
                 let originY = this.state.originImgViewPos.y;
-                
+
                 x = x + originX;
                 y = y + originY;
 
-                dom.style.transform = `translate(${x}px, ${y}px)`;
+                this.setState({
+                    posX: x,
+                    posY: y
+                });
                 return false;
             }
 
@@ -202,25 +220,20 @@ export default function (src) {
                 const {iNow, rotate, rotateY, rotateX, posX, posY} = this.state;
                 const t = this;
 
-                let style = {transform: `scale(${iNow}) rotate(${rotate}deg) translate(${posX}px, ${posY}px) rotateY(${rotateY}deg) rotateX(${rotateX}deg)`}
+                let style = {transform: `scale(${iNow}) translate(${posX}px, ${posY}px) rotateY(${rotateY}deg) rotateX(${rotateX}deg)`}
                 let imgStytle = {};
+                let rotateStyle = {transform: `rotate(${rotate}deg)`};
                 if(this.state.isDrag){
-                    imgStytle = {
-                        visibility: `hidden`
-                    }
                     style.transition = 'none'
                 }else{
-                    imgStytle = {
-                        visibility: `visiable`
-                    }
                     style.transition = 'all .3s'
                 }
 
                 return (
                     <div onDragOver={t.onDragOver.bind(this)} className="rayr-imgview-box" ref="imgviewBox">
                         <div onDragEnd={t.onDragEnd.bind(this)} draggable="true" onDragStart={t.DragStart.bind(this)} className="imgview-box" ref="imgviewImg" style={style}>
-                            <img ref="imgSrc" src={src} style={imgStytle} />
-                            <canvas id="imgCanvas" className="img-canvas"></canvas>
+                            <img ref="imgSrc" src={src}/>
+                            <canvas id="imgCanvas" className="img-canvas" style={rotateStyle}></canvas>
                         </div>
                         <div className="imgview-box-tools">
                             <span className="imgview-icon plus" onClick={() => {
