@@ -45,7 +45,7 @@ export default function (src) {
                     const {iNow} = t.state;
 
                     if (e.deltaY > 0) {
-                        if (iNow > 2) {
+                        if (iNow > 3) {
                             return;
                         }
                         t.setState({
@@ -83,12 +83,12 @@ export default function (src) {
                 const t = this;
 
                 let deg = t.state.rotate - 90;
-                let rotStatus = Math.abs((deg/90 + 4)%4);
+                let rotStatus = Math.abs((deg / 90 + 4) % 4);
                 t.setState({
                     rotate: t.state.rotate - 90,
                     rotateStatus: rotStatus
-                },() => {
-                    
+                }, () => {
+
                 });
             }
 
@@ -96,7 +96,7 @@ export default function (src) {
                 const t = this;
 
                 let deg = t.state.rotate + 90;
-                let rotStatus = Math.abs((deg/90)%4);
+                let rotStatus = Math.abs((deg / 90) % 4);
 
                 console.log(deg);
                 console.log(rotStatus);
@@ -106,17 +106,17 @@ export default function (src) {
                     rotateStatus: rotStatus
                 }, () => {
                     // if(this.state.rotate === 270){
-                    //     this.state.rotate = -90;   
+                    //     this.state.rotate = -90;
                     // }
                     console.log(this.state.rotate);
                 });
-                
+
             }
 
             plusFn() {
                 const {iNow} = this.state;
 
-                if (iNow > 2) {
+                if (iNow > 3) {
                     return;
                 }
                 this.setState({
@@ -163,14 +163,14 @@ export default function (src) {
             ImageToCanvas() {
                 let imgBox = this.refs.imgSrc;
                 let canvas = document.getElementById('imgCanvas');
-                
+
 
                 let image = new Image();
                 image.src = src;
 
                 console.log(image.width);
                 console.log(image.height);
-                let ratio = image.width/image.height;
+                let ratio = image.width / image.height;
                 let h = 400;// max height
                 let w = ratio * h;// max
 
@@ -183,7 +183,7 @@ export default function (src) {
             DragStart(e) {
                 let dom = this.refs.imgviewImg;
                 let oldTransform = dom.style.transform;
-                let oldTfInfo = oldTransform.slice(oldTransform.indexOf('translate'), oldTransform.indexOf('rotateY')-1);// 这里字符串匹配要做优化
+                let oldTfInfo = oldTransform.slice(oldTransform.indexOf('translate'), oldTransform.indexOf('rotateY') - 1);// 这里字符串匹配要做优化
                 oldTfInfo = oldTfInfo.match(/\((.+)\)/)[0];// 匹配括号里的字符串
                 oldTfInfo = oldTfInfo.replace(/(\(|\)|\s)/g, '');
                 let oldTfInfoList = oldTfInfo.split(',');
@@ -242,18 +242,17 @@ export default function (src) {
                 const t = this;
 
                 let style = {transform: `scale(${iNow}) translate(${posX}px, ${posY}px) rotateY(${rotateY}deg) rotateX(${rotateX}deg)`}
-                let imgStytle = {};
                 let rotateStyle = {transform: `rotate(${rotate}deg)`};
-                if(this.state.isDrag){
+                if (this.state.isDrag) {
                     style.transition = 'none'
-                }else{
+                } else {
                     style.transition = 'all .3s'
                 }
 
                 return (
                     <div onDragOver={t.onDragOver.bind(this)} className="rayr-imgview-box" ref="imgviewBox">
-                        <div onDragEnd={t.onDragEnd.bind(this)} draggable="true" onDragStart={t.DragStart.bind(this)} className="imgview-box" ref="imgviewImg" style={style}>
-                            {/* <img ref="imgSrc" src={src}/> */}
+                        <div onDragEnd={t.onDragEnd.bind(this)} draggable="true" onDragStart={t.DragStart.bind(this)}
+                             className="imgview-box" ref="imgviewImg" style={style}>
                             <canvas id="imgCanvas" className="img-canvas" style={rotateStyle}></canvas>
                         </div>
                         <div className="imgview-box-tools">
