@@ -32,6 +32,14 @@
         img {
             width: 100%;
             cursor: move;
+            pointer-events: none;
+            -webkit-user-drag: none;
+            user-select: none;
+        }
+        .img-canvas{
+            position: absolute;
+            top: 0;
+            left: 0;
         }
     }
     .imgview-box-tools {
