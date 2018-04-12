@@ -37,30 +37,15 @@ export default function (src) {
             }
 
             componentDidMount() {
-
                 const {imgviewBox, imgviewImg} = this.refs;
                 const t = this;
-
                 imgviewBox.addEventListener('mousewheel', (e) => {
-                    const {iNow} = t.state;
-
                     if (e.deltaY > 0) {
-                        if (iNow > 3) {
-                            return;
-                        }
-                        t.setState({
-                            iNow: iNow + 0.1
-                        });
+                        this.scale(0);
                     } else {
-                        if (iNow < 0.1) {
-                            return;
-                        }
-                        t.setState({
-                            iNow: iNow - 0.1
-                        });
+                        this.scale(1);
                     }
                 }, false);
-
                 this.ImageToCanvas();
             }
 
@@ -87,8 +72,6 @@ export default function (src) {
                 t.setState({
                     rotate: t.state.rotate - 90,
                     rotateStatus: rotStatus
-                }, () => {
-
                 });
             }
 
@@ -98,41 +81,39 @@ export default function (src) {
                 let deg = t.state.rotate + 90;
                 let rotStatus = Math.abs((deg / 90) % 4);
 
-                console.log(deg);
-                console.log(rotStatus);
-
                 t.setState({
                     rotate: t.state.rotate + 90,
                     rotateStatus: rotStatus
-                }, () => {
-                    // if(this.state.rotate === 270){
-                    //     this.state.rotate = -90;
-                    // }
-                    console.log(this.state.rotate);
                 });
+            }
 
+            scale(type) {
+                const {iNow} = this.state;
+                if(type === 0){
+                    // 放大
+                    if (iNow > 3) {
+                        return;
+                    }
+                    this.setState({
+                        iNow: iNow + 0.1
+                    });
+                }else{
+                    // 缩小
+                    if (iNow < 0.5) {
+                        return;
+                    }
+                    this.setState({
+                        iNow: iNow - 0.1
+                    });
+                }
             }
 
             plusFn() {
-                const {iNow} = this.state;
-
-                if (iNow > 3) {
-                    return;
-                }
-                this.setState({
-                    iNow: iNow + 0.1
-                });
+                this.scale(0);
             }
 
             minusFn() {
-                const {iNow} = this.state;
-
-                if (iNow < 0.1) {
-                    return;
-                }
-                this.setState({
-                    iNow: iNow - 0.1
-                });
+                this.scale(1)
             }
 
             // 水平翻转
@@ -168,8 +149,6 @@ export default function (src) {
                 let image = new Image();
                 image.src = src;
 
-                console.log(image.width);
-                console.log(image.height);
                 let ratio = image.width / image.height;
                 let h = 400;// max height
                 let w = ratio * h;// max
