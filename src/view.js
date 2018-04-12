@@ -40,6 +40,7 @@ export default function (src) {
                 const {imgviewBox, imgviewImg} = this.refs;
                 const t = this;
                 imgviewBox.addEventListener('mousewheel', (e) => {
+                    e.preventDefault();
                     if (e.deltaY > 0) {
                         this.scale(0);
                     } else {
