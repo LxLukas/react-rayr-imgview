@@ -87,6 +87,8 @@ export default function (src) {
                 t.setState({
                     rotate: t.state.rotate - 90,
                     rotateStatus: rotStatus
+                },() => {
+                    
                 });
             }
 
@@ -95,10 +97,20 @@ export default function (src) {
 
                 let deg = t.state.rotate + 90;
                 let rotStatus = Math.abs((deg/90)%4);
+
+                console.log(deg);
+                console.log(rotStatus);
+
                 t.setState({
                     rotate: t.state.rotate + 90,
                     rotateStatus: rotStatus
+                }, () => {
+                    // if(this.state.rotate === 270){
+                    //     this.state.rotate = -90;   
+                    // }
+                    console.log(this.state.rotate);
                 });
+                
             }
 
             plusFn() {
@@ -151,12 +163,21 @@ export default function (src) {
             ImageToCanvas() {
                 let imgBox = this.refs.imgSrc;
                 let canvas = document.getElementById('imgCanvas');
-                canvas.width = imgBox.width;
-                canvas.height = imgBox.height;
+                
 
                 let image = new Image();
-                image.src = imgBox.src;
-                canvas.getContext("2d").drawImage(image, 0, 0, imgBox.width, imgBox.height);//0, 0参数画布上的坐标点，图片将会拷贝到这个地方
+                image.src = src;
+
+                console.log(image.width);
+                console.log(image.height);
+                let ratio = image.width/image.height;
+                let h = 400;// max height
+                let w = ratio * h;// max
+
+                canvas.width = w;
+                canvas.height = h;
+
+                canvas.getContext("2d").drawImage(image, 0, 0, w, h);//0, 0参数画布上的坐标点，图片将会拷贝到这个地方
             }
 
             DragStart(e) {
@@ -232,7 +253,7 @@ export default function (src) {
                 return (
                     <div onDragOver={t.onDragOver.bind(this)} className="rayr-imgview-box" ref="imgviewBox">
                         <div onDragEnd={t.onDragEnd.bind(this)} draggable="true" onDragStart={t.DragStart.bind(this)} className="imgview-box" ref="imgviewImg" style={style}>
-                            <img ref="imgSrc" src={src}/>
+                            {/* <img ref="imgSrc" src={src}/> */}
                             <canvas id="imgCanvas" className="img-canvas" style={rotateStyle}></canvas>
                         </div>
                         <div className="imgview-box-tools">

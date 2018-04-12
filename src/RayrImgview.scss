@@ -31,16 +31,17 @@
         transition: all .3s;
         img {
             width: 100%;
-            cursor: move;
             pointer-events: none;
             -webkit-user-drag: none;
             user-select: none;
             visibility: hidden;
+            display: none;
         }
         .img-canvas{
-            position: absolute;
-            top: 0;
-            left: 0;
+            // position: absolute;
+            // top: 0;
+            // left: 0;
+            max-width: 600px;
             transition: all .3s;
         }
     }
