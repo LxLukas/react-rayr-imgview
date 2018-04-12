@@ -160,6 +160,8 @@ export default function (src) {
             }
 
             DragStart(e) {
+                DataTransfer.effectAllowed = 'move';
+
                 let dom = this.refs.imgviewImg;
                 let oldTransform = dom.style.transform;
                 let oldTfInfo = oldTransform.slice(oldTransform.indexOf('translate'), oldTransform.indexOf('rotateY') - 1);// 这里字符串匹配要做优化
