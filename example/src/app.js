@@ -10,7 +10,7 @@ function App() {
     return (
         <div>
             <h1>组件初始化</h1>
-            <RayrImgview className="imgview-demo" alt='测试' src="http://pic1.win4000.com/wallpaper/2/50616eda66fd3.jpg"/>
+            <RayrImgview className="imgview-demo" alt='测试' src="http://img-hxy021.didistatic.com/static/woc/orion_mis/329fd5cf4202_20180326183623.jpg"/>
         </div>
     )
 }

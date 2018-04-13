@@ -154,10 +154,10 @@ export default function (src) {
                 let h = 400;// max height
                 let w = ratio * h;// max
 
-                canvas.width = w;
-                canvas.height = h;
+                canvas.width = w*4;
+                canvas.height = h*4;
 
-                canvas.getContext("2d").drawImage(image, 0, 0, w, h);//0, 0参数画布上的坐标点，图片将会拷贝到这个地方
+                canvas.getContext("2d").drawImage(image, 0, 0, w*4, h*4);//0, 0参数画布上的坐标点，图片将会拷贝到这个地方
             }
 
             DragStart(e) {
