@@ -161,7 +161,7 @@ export default function (src) {
             }
 
             DragStart(e) {
-                DataTransfer.effectAllowed = 'move';
+                // DataTransfer.effectAllowed = 'move';
 
                 let dom = this.refs.imgviewImg;
                 let oldTransform = dom.style.transform;
@@ -223,8 +223,8 @@ export default function (src) {
                 const {iNow, rotate, rotateY, rotateX, posX, posY} = this.state;
                 const t = this;
 
-                let style = {transform: `scale(${iNow}) translate(${posX}px, ${posY}px) rotateY(${rotateY}deg) rotateX(${rotateX}deg)`}
-                let rotateStyle = {transform: `rotate(${rotate}deg)`};
+                let style = {transform: `translateZ(0) translate(${posX}px, ${posY}px) rotateY(${rotateY}deg) rotateX(${rotateX}deg)`}
+                let rotateStyle = {transform: `scale(${iNow}) rotate(${rotate}deg)`};
                 if (this.state.isDrag) {
                     style.transition = 'none'
                 } else {

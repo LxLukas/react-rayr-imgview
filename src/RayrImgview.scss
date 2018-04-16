@@ -31,6 +31,7 @@
     .imgview-box {
         max-width: 50%;
         transition: all .3s;
+        z-index: 10000;
         img {
             width: 100%;
             pointer-events: none;
@@ -50,6 +51,7 @@
         left: 50%;
         transform: translate(-50%, 0);
         bottom: 80px;
+        z-index: 10001;
         span {
             width: 24px;
             height: 24px;
