@@ -150,22 +150,26 @@ export default function (src) {
                 let image = new Image();
                 image.src = src;
 
-                let ratio = image.width / image.height;
-                let h = 400;// max height
-                let w = ratio * h;// max
+                let width = image.width;
+                let height = image.height;
 
-                canvas.width = w*4;
-                canvas.height = h*4;
+                canvas.width = width *1.5;
+                canvas.height = height *1.5;
 
-                canvas.getContext("2d").drawImage(image, 0, 0, w*4, h*4);//0, 0参数画布上的坐标点，图片将会拷贝到这个地方
+                canvas.getContext("2d").drawImage(image, 0, 0, width *1.5, height *1.5);//0, 0参数画布上的坐标点，图片将会拷贝到这个地方
             }
 
             DragStart(e) {
-                // DataTransfer.effectAllowed = 'move';
+
+                var dragIcon = document.createElement('img');
+                dragIcon.src = '';
+                dragIcon.style.width = 1;
+                dragIcon.style.height = 1;
+                // e.dataTransfer.setDragImage(dragIcon, 0, 0);
 
                 let dom = this.refs.imgviewImg;
                 let oldTransform = dom.style.transform;
-                let oldTfInfo = oldTransform.slice(oldTransform.indexOf('translate'), oldTransform.indexOf('rotateY') - 1);// 这里字符串匹配要做优化
+                let oldTfInfo = oldTransform.slice(oldTransform.indexOf('translate'), oldTransform.length);// 这里字符串匹配要做优化
                 oldTfInfo = oldTfInfo.match(/\((.+)\)/)[0];// 匹配括号里的字符串
                 oldTfInfo = oldTfInfo.replace(/(\(|\)|\s)/g, '');
                 let oldTfInfoList = oldTfInfo.split(',');
@@ -223,7 +227,7 @@ export default function (src) {
                 const {iNow, rotate, rotateY, rotateX, posX, posY} = this.state;
                 const t = this;
 
-                let style = {transform: `translateZ(0) translate(${posX}px, ${posY}px) rotateY(${rotateY}deg) rotateX(${rotateX}deg)`}
+                let style = {transform: `rotateY(${rotateY}deg) rotateX(${rotateX}deg) translate(${posX}px, ${posY}px)`}
                 let rotateStyle = {transform: `scale(${iNow}) rotate(${rotate}deg)`};
                 if (this.state.isDrag) {
                     style.transition = 'none'
