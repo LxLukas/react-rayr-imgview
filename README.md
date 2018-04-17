@@ -34,8 +34,8 @@ npm install react-rayr-imageview --save
 
 - 预览前
 
-![Alt 预览前](https://raw.githubusercontent.com/rayrcoder/react-rayr-imgview/master/src/imgs/demo_001.png)
+![Alt 预览前](https://raw.githubusercontent.com/rayrcoder/react-rayr-imgview/master/src/imgs/demo001.png)
 
 - 点击后预览效果
 
-![Alt 预览效果](https://raw.githubusercontent.com/rayrcoder/react-rayr-imgview/master/src/imgs/demo_002.png)
+![Alt 预览效果](https://raw.githubusercontent.com/rayrcoder/react-rayr-imgview/master/src/imgs/demo002.png)
