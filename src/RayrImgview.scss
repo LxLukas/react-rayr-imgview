@@ -29,7 +29,7 @@
         cursor: pointer;
     }
     .imgview-box {
-        max-width: 50%;
+        // max-width: 50%;
         transition: all .3s;
         z-index: 10000;
         img {
@@ -41,7 +41,7 @@
             display: none;
         }
         .img-canvas{
-            max-width: 600px;
+            // max-width: 600px;
             transition: all .3s;
         }
     }

@@ -33,6 +33,8 @@ export default function (src) {
                         x: 0,
                         y: 0
                     },
+                    boxW: 0,
+                    boxH: 0,
                     rotateStatus: 0// 0,1,2,3 四个值，分别代表旋转的四个朝向
                 }
             }
@@ -154,6 +156,15 @@ export default function (src) {
                 let width = image.width;
                 let height = image.height;
 
+                // 根据屏幕高度设置最适合的显示宽高
+                let boxH = window.innerHeight * 0.7;
+                let boxW = (boxH/height) * width;
+
+                this.setState({
+                    boxW: boxW,
+                    boxH: boxH
+                });
+
                 canvas.width = width *1.5;
                 canvas.height = height *1.5;
 
@@ -235,11 +246,17 @@ export default function (src) {
 
             render() {
 
-                const {iNow, rotate, rotateY, rotateX, posX, posY} = this.state;
+                const {boxW, boxH, iNow, rotate, rotateY, rotateX, posX, posY} = this.state;
                 const t = this;
 
-                let style = {transform: `rotateY(${rotateY}deg) rotateX(${rotateX}deg) translate(${posX}px, ${posY}px)`}
-                let rotateStyle = {transform: `scale(${iNow}) rotate(${rotate}deg)`};
+                console.log(posX);
+                console.log(posY);
+
+                let transOriginX = posX + boxW/2;
+                let transOriginY = posY + boxH/2;
+
+                let style = {width: `${boxW}px`, height: `${boxH}px`, transformOrigin: `${transOriginX}px ${transOriginY}px`, transform: `rotateY(${rotateY}deg) rotateX(${rotateX}deg) translate(${posX}px, ${posY}px)`}
+                let rotateStyle = {width: `${boxW}px`, height: `${boxH}px`,transform: `scale(${iNow}) rotate(${rotate}deg)`};
                 if (this.state.isDrag) {
                     style.transition = 'none'
                 } else {
