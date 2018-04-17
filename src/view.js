@@ -4,6 +4,7 @@
 
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
+import dragIcon from './dragIcon.png';
 
 export default function (src) {
 
@@ -159,13 +160,23 @@ export default function (src) {
                 canvas.getContext("2d").drawImage(image, 0, 0, width *1.5, height *1.5);//0, 0参数画布上的坐标点，图片将会拷贝到这个地方
             }
 
+            getDragIcon() {
+                return (
+                    <img src={dragIcon} alt="drag-icon"/>
+                );
+            }
+
             DragStart(e) {
 
-                var dragIcon = document.createElement('img');
-                dragIcon.src = '';
-                dragIcon.style.width = 1;
-                dragIcon.style.height = 1;
-                // e.dataTransfer.setDragImage(dragIcon, 0, 0);
+                // var dragIcon = document.createElement('img');
+                // dragIcon.src = dragIcon;
+                // dragIcon.style.width = 1;
+                // dragIcon.style.height = 1;
+
+                // https://s1.ax2x.com/2018/04/17/kijwp.png
+                let d = document.createElement('img');
+                d.src = 'https://s1.ax2x.com/2018/04/17/kijwp.png';
+                e.dataTransfer.setDragImage(d, 0, 0);
 
                 let dom = this.refs.imgviewImg;
                 let oldTransform = dom.style.transform;
@@ -240,6 +251,7 @@ export default function (src) {
                         <div onDragEnd={t.onDragEnd.bind(this)} draggable="true" onDragStart={t.DragStart.bind(this)}
                              className="imgview-box" ref="imgviewImg" style={style}>
                             <canvas id="imgCanvas" className="img-canvas" style={rotateStyle}></canvas>
+                            <img id="dragIcon" src={dragIcon} alt="dragIcon" />
                         </div>
                         <div className="imgview-box-tools">
                             <span className="imgview-icon plus" onClick={() => {
