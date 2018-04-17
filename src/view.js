@@ -4,7 +4,6 @@
 
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
-import dragIcon from './dragIcon.png';
 
 export default function (src) {
 
@@ -73,10 +72,22 @@ export default function (src) {
 
                 let deg = t.state.rotate - 90;
                 let rotStatus = Math.abs((deg / 90 + 4) % 4);
-                t.setState({
-                    rotate: t.state.rotate - 90,
-                    rotateStatus: rotStatus
-                });
+                
+                // x,y的旋转会直接影响 z的旋转，所以要进行判断
+                let {rotateX, rotateY} = this.state;
+                if((rotateX+rotateY) === 0 || (rotateX+rotateY) === 360){
+                    // z轴正向转动
+                    t.setState({
+                        rotate: t.state.rotate - 90,
+                        rotateStatus: rotStatus
+                    });
+                }else{
+                    // z反向转动
+                    t.setState({
+                        rotate: t.state.rotate + 90,
+                        rotateStatus: rotStatus
+                    });
+                }
             }
 
             tRight() {
@@ -85,10 +96,21 @@ export default function (src) {
                 let deg = t.state.rotate + 90;
                 let rotStatus = Math.abs((deg / 90) % 4);
 
-                t.setState({
-                    rotate: t.state.rotate + 90,
-                    rotateStatus: rotStatus
-                });
+                // x,y的旋转会直接影响 z的旋转，所以要进行判断
+                let {rotateX, rotateY} = this.state;
+                if((rotateX+rotateY) === 0 || (rotateX+rotateY) === 360){
+                    // z轴正向转动
+                    t.setState({
+                        rotate: t.state.rotate + 90,
+                        rotateStatus: rotStatus
+                    });
+                }else{
+                    // z反向转动
+                    t.setState({
+                        rotate: t.state.rotate - 90,
+                        rotateStatus: rotStatus
+                    });
+                }
             }
 
             scale(type) {
@@ -171,22 +193,11 @@ export default function (src) {
                 canvas.getContext("2d").drawImage(image, 0, 0, width *1.5, height *1.5);//0, 0参数画布上的坐标点，图片将会拷贝到这个地方
             }
 
-            getDragIcon() {
-                return (
-                    <img src={dragIcon} alt="drag-icon"/>
-                );
-            }
-
             DragStart(e) {
-
-                // var dragIcon = document.createElement('img');
-                // dragIcon.src = dragIcon;
-                // dragIcon.style.width = 1;
-                // dragIcon.style.height = 1;
-
-                // https://s1.ax2x.com/2018/04/17/kijwp.png
+                // 利用 base64 编码，给一个 1x1像素的完全透明的png图片，代替默认的拖拽时会出现的重影
+                // 解决Safari下面的拖拽效果bug
                 let d = document.createElement('img');
-                d.src = 'https://s1.ax2x.com/2018/04/17/kijwp.png';
+                d.src = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAAtJREFUCB1jYAACAAAFAAGNu5vzAAAAAElFTkSuQmCC';
                 e.dataTransfer.setDragImage(d, 0, 0);
 
                 let dom = this.refs.imgviewImg;
@@ -249,9 +260,6 @@ export default function (src) {
                 const {boxW, boxH, iNow, rotate, rotateY, rotateX, posX, posY} = this.state;
                 const t = this;
 
-                console.log(posX);
-                console.log(posY);
-
                 let transOriginX = posX + boxW/2;
                 let transOriginY = posY + boxH/2;
 
@@ -268,7 +276,6 @@ export default function (src) {
                         <div onDragEnd={t.onDragEnd.bind(this)} draggable="true" onDragStart={t.DragStart.bind(this)}
                              className="imgview-box" ref="imgviewImg" style={style}>
                             <canvas id="imgCanvas" className="img-canvas" style={rotateStyle}></canvas>
-                            <img id="dragIcon" src={dragIcon} alt="dragIcon" />
                         </div>
                         <div className="imgview-box-tools">
                             <span className="imgview-icon plus" onClick={() => {
