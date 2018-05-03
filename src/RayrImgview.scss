@@ -12,7 +12,7 @@
     // background-color: rgba(0, 0, 0, .7);
     align-items: center;
     justify-content: center;
-    z-index: 999996;
+    z-index: 999993;
     cursor: move;
     // 解决Safari 下面一个莫名其妙的bug
     // background 用 after 来实现，否则，在图片左右上下翻转的时候会出现显示的bug
@@ -40,12 +40,12 @@
         height: 24px;
         background-position: -264px 0;
         cursor: pointer;
-        z-index: 10002;
+        z-index: 999996;
     }
     .imgview-box {
         // max-width: 50%;
         transition: all .3s;
-        z-index: 10000;
+        z-index: 999994;
         img {
             width: 100%;
             pointer-events: none;
@@ -65,7 +65,7 @@
         left: 50%;
         transform: translate(-50%, 0);
         bottom: 80px;
-        z-index: 10001;
+        z-index: 999995;
         span {
             width: 24px;
             height: 24px;
