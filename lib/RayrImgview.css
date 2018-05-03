@@ -11,7 +11,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 999996;
+  z-index: 999993;
   cursor: move;
 }
 
@@ -40,12 +40,12 @@
   height: 24px;
   background-position: -264px 0;
   cursor: pointer;
-  z-index: 10002;
+  z-index: 999996;
 }
 
 .rayr-imgview-box .imgview-box {
   transition: all .3s;
-  z-index: 10000;
+  z-index: 999994;
 }
 
 .rayr-imgview-box .imgview-box img {
@@ -67,7 +67,7 @@
   left: 50%;
   transform: translate(-50%, 0);
   bottom: 80px;
-  z-index: 10001;
+  z-index: 999995;
 }
 
 .rayr-imgview-box .imgview-box-tools span {
