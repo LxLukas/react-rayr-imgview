@@ -34,7 +34,9 @@ export default function (src) {
                     },
                     boxW: 0,
                     boxH: 0,
-                    rotateStatus: 0// 0,1,2,3 四个值，分别代表旋转的四个朝向
+                    rotateStatus: 0,// 0,1,2,3 四个值，分别代表旋转的四个朝向
+                    isLoading: true,
+                    statusStr: '图片加载中...'
                 }
             }
 
@@ -175,22 +177,32 @@ export default function (src) {
                 let image = new Image();
                 image.src = src;
 
-                let width = image.width;
-                let height = image.height;
+                image.onload = () => {
+                    let width = image.width;
+                    let height = image.height;
 
-                // 根据屏幕高度设置最适合的显示宽高
-                let boxH = window.innerHeight * 0.7;
-                let boxW = (boxH/height) * width;
+                    // 根据屏幕高度设置最适合的显示宽高
+                    let boxH = window.innerHeight * 0.7;
+                    let boxW = (boxH/height) * width;
 
-                this.setState({
-                    boxW: boxW,
-                    boxH: boxH
-                });
+                    this.setState({
+                        boxW: boxW,
+                        boxH: boxH,
+                        isLoading: false
+                    });
 
-                canvas.width = width *1.5;
-                canvas.height = height *1.5;
+                    canvas.width = width *1.5;
+                    canvas.height = height *1.5;
 
-                canvas.getContext("2d").drawImage(image, 0, 0, width *1.5, height *1.5);//0, 0参数画布上的坐标点，图片将会拷贝到这个地方
+                    canvas.getContext("2d").drawImage(image, 0, 0, width *1.5, height *1.5);//0, 0参数画布上的坐标点，图片将会拷贝到这个地方
+                }
+
+                image.onerror = () => {
+                    this.setState({
+                        isLoading: true,
+                        statusStr: '图片加载失败'
+                    });
+                }
             }
 
             DragStart(e) {
@@ -275,6 +287,9 @@ export default function (src) {
                     <div onDragOver={t.onDragOver.bind(this)} className="rayr-imgview-box" ref="imgviewBox">
                         <div onDragEnd={t.onDragEnd.bind(this)} draggable="true" onDragStart={t.DragStart.bind(this)}
                              className="imgview-box" ref="imgviewImg" style={style}>
+                             {
+                                 this.state.isLoading ? <div className="img-loading">{this.state.statusStr}</div> : null
+                             }
                             <canvas id="imgCanvas" className="img-canvas" style={rotateStyle}></canvas>
                         </div>
                         <div className="imgview-box-tools">
